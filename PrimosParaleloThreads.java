@@ -42,8 +42,8 @@ public class PrimosParaleloThreads {
 
     public static void main(String[] args) {
         String arquivoEntrada = "entrada.txt";
-        String arquivoSaida = "saida.txt";
-        int numThreads = 1; // 🔹 aqui você define quantas threads quer usar
+        String arquivoSaida = "saida8.txt";
+        int numThreads = 8; // 🔹 aqui você define quantas threads quer usar
 
         try {
             // Lê os números do arquivo
@@ -60,6 +60,8 @@ public class PrimosParaleloThreads {
 
             int n = numeros.size();
             boolean[] resultados = new boolean[n];
+
+            long inicioTempo = System.currentTimeMillis();
 
             // Divide os índices entre as threads
             Worker[] threads = new Worker[numThreads];
@@ -81,6 +83,9 @@ public class PrimosParaleloThreads {
                 }
             }
 
+            long fimTempo = System.currentTimeMillis();
+            long tempoExecucao = fimTempo - inicioTempo;
+
             // Grava os primos no arquivo de saída, mantendo a ordem original
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(arquivoSaida))) {
                 for (int i = 0; i < n; i++) {
@@ -92,6 +97,7 @@ public class PrimosParaleloThreads {
             }
 
             System.out.println("Processamento concluído! Veja o arquivo: " + arquivoSaida);
+            System.out.println("Tempo de execução: " + tempoExecucao + " ms");
 
         } catch (IOException e) {
             System.err.println("Erro ao ler ou escrever arquivo: " + e.getMessage());
